@@ -1,8 +1,42 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewBag.Title = "Ana Sayfa";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Ana Sayfa</title>
+    <!-- Bootstrap CSS ekleme -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+</head>
+
+<div style="margin-bottom: 238px;"></div>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+
+                <a class="btn btn-primary mx-auto" href="/Task/Apply"
+                    style="background-color: #00CED1; width: 25%; margin-bottom: 12px;">Personel Task Ekle</a>
+            </div>
+            <div class="col-md-12 text-center">
+                <a class="btn btn-primary mx-auto" href="/Task/Index"
+                style="background-color: #00CED1; width: 25%;">Yönetici Task Takip</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS ve Popper.js ekleme -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha384-KyZXEAg3QhqLMpG8r+J6S/JUz0WlFjE5mVuOad7lzhV4Pf2b5f5R5F04I5O+5F04"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYlT"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

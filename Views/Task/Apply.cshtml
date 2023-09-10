@@ -1,0 +1,185 @@
+@model Employee
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <style>
+        .task-ekle-baslik-container {
+            background-color: #00CED1;
+            /* Turkuaz renk */
+            padding: 5px;
+            /* İçeriği çevreleyen boşluk */
+            text-align: center;
+        }
+
+        .task-ekle-baslik {
+    color: white; /* Beyaz renkli yazı */
+    font-size: 20px; /* Yazı boyutu */
+    transform: translateY(3px); /* Y ekseninde 10 piksel aşağı kaydırma */
+}
+
+
+        .form-group {
+            margin-bottom: 10px;
+        }
+
+        .responsive-textbox {
+            width: 97%;
+            min-height: 70px;
+            resize: none;
+            overflow: hidden;
+            transition: height 0.3s;
+        }
+
+        .add-button {
+            width: 28px;
+            height: 29px;
+            border-radius: 20%;
+            margin-top: 3px;
+            /* Düğmeyi aşağı kaydır */
+            background-color: #00CED1;
+            color: white;
+            font-weight: bold;
+            text-align: center;
+            line-height: 20px;
+            /* Düğmelerin yüksekliği kadar line-height ayarlayarak düğmeleri dikey olarak ortalarsınız */
+            margin-bottom: 0px;
+            /* Düğmeler arasında boşluk bırak */
+        }
+
+        .remove-button {
+            width: 28px;
+            height: 29px;
+            border-radius: 20%;
+            margin-top: 28px;
+            /* Düğmeyi aşağı kaydır */
+            background-color: #00CED1;
+            color: white;
+            font-weight: bold;
+            text-align: center;
+            line-height: 20px;
+            /* Düğmelerin yüksekliği kadar line-height ayarlayarak düğmeleri dikey olarak ortalarsınız */
+            margin-bottom: 0px;
+            /* Düğmeler arasında boşluk bırak */
+        }
+
+        .button-container {
+            display: flex;
+            flex-direction: column-reverse;
+            /* Düğmeleri ters sırayla dikey olarak sırala */
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+
+        .textbox-container {
+            display: flex;
+            position: relative;
+            flex-direction: column;
+            /* Task isimleri ve text boxları dikey olarak sıralamak için */
+        }
+
+        .task-label {
+            text-align: center;
+            /* Task isimlerini ortala */
+            margin-bottom: 5px;
+            /* Task isimleri ile text box arasında boşluk bırak */
+        }
+
+        /* Task Ekle başlığı için stil */
+    </style>
+</head>
+
+<body>
+    <!-- Task Ekle başlığı -->
+    <div class="task-ekle-baslik-container">
+        <h1 class="task-ekle-baslik">Task Ekle</h1>
+    </div>
+
+    <!-- Task Ekle başlığı -->
+
+    <form method="post" action="/task/apply">
+        <div class="form-group my-2">
+            <label>Personel-Ad</label>
+            <input name="FirstName" class="form-control">
+        </div>
+        <div class="form-group my-2">
+            <label>Personel-Soyad</label>
+            <input name="LastName" class="form-control">
+        </div>
+        <div class="form-group my-2" id="extra-info-container">
+            <div class="textbox-container">
+                <div class="button-container">
+                    <button type="button" class="add-button" onclick="addTextbox()">+</button>
+                    <button type="button" class="remove-button" onclick="removeTextbox()">-</button>
+                </div>
+                <div id="task-container">
+                    @if (Model != null && Model.Tasks != null)
+                    {
+                        for (int i = 0; i < Model.Tasks.Count; i++)
+                        {
+                            <label class="task-label">Task @(i + 1)</label>
+                            <textarea name="Tasks[@i]" class="form-control responsive-textbox">@Model.Tasks[i]</textarea>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <button class="btn btn-primary mx-auto" type="submit" style="background-color: #00CED1; width: 6%;">Gönder</button>
+        </div>
+    </form>
+
+    <script>
+        function resizeTextarea(textbox) {
+            textbox.style.height = "auto";
+            textbox.style.height = (textbox.scrollHeight) + "px";
+        }
+
+        var maxTextboxes = 5;
+        var textboxCount = 0;
+
+        // Ensure that the first "Task 1" textarea is displayed by default
+        addTextbox();
+
+        function addTextbox() {
+            if (textboxCount < maxTextboxes) {
+                var taskContainer = document.getElementById("task-container");
+
+                var newDiv = document.createElement("div");
+                newDiv.className = "task";
+
+                var newLabel = document.createElement("label");
+                newLabel.className = "task-label";
+                newLabel.textContent = "Task " + (textboxCount + 1);
+
+                var newTextbox = document.createElement("textarea");
+                newTextbox.name = "Tasks[" + textboxCount + "].Description";
+                newTextbox.className = "form-control responsive-textbox";
+                newTextbox.oninput = function () {
+                    resizeTextarea(this);
+                };
+
+                newDiv.appendChild(newLabel);
+                newDiv.appendChild(newTextbox);
+                taskContainer.appendChild(newDiv);
+
+                textboxCount++;
+            }
+        }
+
+        function removeTextbox() {
+            if (textboxCount > 1) {
+                var taskContainer = document.getElementById("task-container");
+                taskContainer.removeChild(taskContainer.lastChild);
+                textboxCount--;
+            }
+        }
+    </script>
+
+
+</body>
+
+
+</html>
